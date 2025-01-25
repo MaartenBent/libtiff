@@ -2129,7 +2129,8 @@ static int TIFFWriteDirectoryTagTransferfunction(TIFF *tif, uint32_t *ndir,
     /* clang-format on */
 
     /* Check for proper number of transferfunctions */
-    for (int i = 0; i < n; i++)
+    int i;
+    for (i = 0; i < n; i++)
     {
         if (tif->tif_dir.td_transferfunction[i] == NULL)
         {

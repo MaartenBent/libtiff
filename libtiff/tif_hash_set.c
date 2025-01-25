@@ -226,7 +226,8 @@ static void TIFFHashSetReturnListElt(TIFFHashSet *set, TIFFList *psList)
 static void TIFFHashSetClearInternal(TIFFHashSet *set, bool bFinalize)
 {
     assert(set != NULL);
-    for (int i = 0; i < set->nAllocatedSize; i++)
+    int i;
+    for (i = 0; i < set->nAllocatedSize; i++)
     {
         TIFFList *cur = set->tabList[i];
         while (cur)
@@ -378,7 +379,8 @@ static bool TIFFHashSetRehash(TIFFHashSet *set)
               set->nCollisions * 100.0 / set->nSize);
     set->nCollisions = 0;
 #endif
-    for (int i = 0; i < set->nAllocatedSize; i++)
+    int i;
+    for (i = 0; i < set->nAllocatedSize; i++)
     {
         TIFFList *cur = set->tabList[i];
         while (cur)
