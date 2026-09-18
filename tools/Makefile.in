@@ -178,22 +178,23 @@ thumbnail_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
 am_tiff2bw_OBJECTS = tiff2bw.$(OBJEXT)
 tiff2bw_OBJECTS = $(am_tiff2bw_OBJECTS)
 tiff2bw_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
-am_tiff2pdf_OBJECTS = tiff2pdf.$(OBJEXT)
+am__objects_1 = tiff_tools.$(OBJEXT)
+am_tiff2pdf_OBJECTS = tiff2pdf.$(OBJEXT) $(am__objects_1)
 tiff2pdf_OBJECTS = $(am_tiff2pdf_OBJECTS)
 tiff2pdf_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
-am_tiff2ps_OBJECTS = tiff2ps.$(OBJEXT)
+am_tiff2ps_OBJECTS = tiff2ps.$(OBJEXT) $(am__objects_1)
 tiff2ps_OBJECTS = $(am_tiff2ps_OBJECTS)
 tiff2ps_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
-am_tiff2rgba_OBJECTS = tiff2rgba.$(OBJEXT)
+am_tiff2rgba_OBJECTS = tiff2rgba.$(OBJEXT) $(am__objects_1)
 tiff2rgba_OBJECTS = $(am_tiff2rgba_OBJECTS)
 tiff2rgba_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
 am_tiffcmp_OBJECTS = tiffcmp.$(OBJEXT)
 tiffcmp_OBJECTS = $(am_tiffcmp_OBJECTS)
 tiffcmp_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
-am_tiffcp_OBJECTS = tiffcp.$(OBJEXT)
+am_tiffcp_OBJECTS = tiffcp.$(OBJEXT) $(am__objects_1)
 tiffcp_OBJECTS = $(am_tiffcp_OBJECTS)
 tiffcp_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
-am_tiffcrop_OBJECTS = tiffcrop.$(OBJEXT)
+am_tiffcrop_OBJECTS = tiffcrop.$(OBJEXT) $(am__objects_1)
 tiffcrop_OBJECTS = $(am_tiffcrop_OBJECTS)
 tiffcrop_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
 am_tiffdither_OBJECTS = tiffdither.$(OBJEXT)
@@ -210,16 +211,16 @@ tiffgt_DEPENDENCIES = $(LIBTIFF) $(LIBPORT) $(am__DEPENDENCIES_1) \
 tiffgt_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(tiffgt_CFLAGS) $(CFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-am_tiffinfo_OBJECTS = tiffinfo.$(OBJEXT)
+am_tiffinfo_OBJECTS = tiffinfo.$(OBJEXT) $(am__objects_1)
 tiffinfo_OBJECTS = $(am_tiffinfo_OBJECTS)
 tiffinfo_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
 am_tiffmedian_OBJECTS = tiffmedian.$(OBJEXT)
 tiffmedian_OBJECTS = $(am_tiffmedian_OBJECTS)
 tiffmedian_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
-am_tiffset_OBJECTS = tiffset.$(OBJEXT)
+am_tiffset_OBJECTS = tiffset.$(OBJEXT) $(am__objects_1)
 tiffset_OBJECTS = $(am_tiffset_OBJECTS)
 tiffset_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
-am_tiffsplit_OBJECTS = tiffsplit.$(OBJEXT)
+am_tiffsplit_OBJECTS = tiffsplit.$(OBJEXT) $(am__objects_1)
 tiffsplit_OBJECTS = $(am_tiffsplit_OBJECTS)
 tiffsplit_DEPENDENCIES = $(LIBTIFF) $(LIBPORT)
 AM_V_P = $(am__v_P_@AM_V@)
@@ -243,11 +244,12 @@ am__depfiles_remade = ./$(DEPDIR)/fax2ps.Po ./$(DEPDIR)/fax2tiff.Po \
 	./$(DEPDIR)/rgb2ycbcr.Po ./$(DEPDIR)/thumbnail.Po \
 	./$(DEPDIR)/tiff2bw.Po ./$(DEPDIR)/tiff2pdf.Po \
 	./$(DEPDIR)/tiff2ps.Po ./$(DEPDIR)/tiff2rgba.Po \
-	./$(DEPDIR)/tiffcmp.Po ./$(DEPDIR)/tiffcp.Po \
-	./$(DEPDIR)/tiffcrop.Po ./$(DEPDIR)/tiffdither.Po \
-	./$(DEPDIR)/tiffdump.Po ./$(DEPDIR)/tiffgt-tiffgt.Po \
-	./$(DEPDIR)/tiffinfo.Po ./$(DEPDIR)/tiffmedian.Po \
-	./$(DEPDIR)/tiffset.Po ./$(DEPDIR)/tiffsplit.Po
+	./$(DEPDIR)/tiff_tools.Po ./$(DEPDIR)/tiffcmp.Po \
+	./$(DEPDIR)/tiffcp.Po ./$(DEPDIR)/tiffcrop.Po \
+	./$(DEPDIR)/tiffdither.Po ./$(DEPDIR)/tiffdump.Po \
+	./$(DEPDIR)/tiffgt-tiffgt.Po ./$(DEPDIR)/tiffinfo.Po \
+	./$(DEPDIR)/tiffmedian.Po ./$(DEPDIR)/tiffset.Po \
+	./$(DEPDIR)/tiffsplit.Po
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -456,6 +458,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -473,6 +476,7 @@ EXTRA_DIST = \
 	tif_tools_versioninfo.rc
 
 @HAVE_RPATH_TRUE@AM_LDFLAGS = $(LIBDIR)
+TIFF_TOOLS_COMMON = tiff_tools.c tiff_tools.h
 fax2ps_SOURCES = fax2ps.c
 fax2ps_LDADD = $(LIBTIFF) $(LIBPORT)
 fax2tiff_SOURCES = fax2tiff.c
@@ -489,29 +493,29 @@ thumbnail_SOURCES = thumbnail.c
 thumbnail_LDADD = $(LIBTIFF) $(LIBPORT)
 tiff2bw_SOURCES = tiff2bw.c
 tiff2bw_LDADD = $(LIBTIFF) $(LIBPORT)
-tiff2pdf_SOURCES = tiff2pdf.c
+tiff2pdf_SOURCES = tiff2pdf.c $(TIFF_TOOLS_COMMON)
 tiff2pdf_LDADD = $(LIBTIFF) $(LIBPORT)
-tiff2ps_SOURCES = tiff2ps.c
+tiff2ps_SOURCES = tiff2ps.c $(TIFF_TOOLS_COMMON)
 tiff2ps_LDADD = $(LIBTIFF) $(LIBPORT)
-tiff2rgba_SOURCES = tiff2rgba.c
+tiff2rgba_SOURCES = tiff2rgba.c $(TIFF_TOOLS_COMMON)
 tiff2rgba_LDADD = $(LIBTIFF) $(LIBPORT)
 tiffcmp_SOURCES = tiffcmp.c
 tiffcmp_LDADD = $(LIBTIFF) $(LIBPORT)
-tiffcp_SOURCES = tiffcp.c
+tiffcp_SOURCES = tiffcp.c $(TIFF_TOOLS_COMMON)
 tiffcp_LDADD = $(LIBTIFF) $(LIBPORT)
-tiffcrop_SOURCES = tiffcrop.c
+tiffcrop_SOURCES = tiffcrop.c $(TIFF_TOOLS_COMMON)
 tiffcrop_LDADD = $(LIBTIFF) $(LIBPORT)
 tiffdither_SOURCES = tiffdither.c
 tiffdither_LDADD = $(LIBTIFF) $(LIBPORT)
 tiffdump_SOURCES = tiffdump.c
 tiffdump_LDADD = $(LIBTIFF) $(LIBPORT)
-tiffinfo_SOURCES = tiffinfo.c
+tiffinfo_SOURCES = tiffinfo.c $(TIFF_TOOLS_COMMON)
 tiffinfo_LDADD = $(LIBTIFF) $(LIBPORT)
 tiffmedian_SOURCES = tiffmedian.c
 tiffmedian_LDADD = $(LIBTIFF) $(LIBPORT)
-tiffset_SOURCES = tiffset.c
+tiffset_SOURCES = tiffset.c $(TIFF_TOOLS_COMMON)
 tiffset_LDADD = $(LIBTIFF) $(LIBPORT)
-tiffsplit_SOURCES = tiffsplit.c
+tiffsplit_SOURCES = tiffsplit.c $(TIFF_TOOLS_COMMON)
 tiffsplit_LDADD = $(LIBTIFF) $(LIBPORT)
 tiffgt_SOURCES = tiffgt.c
 tiffgt_CFLAGS = $(CFLAGS) $(GLUT_CFLAGS) $(AM_CFLAGS)
@@ -726,6 +730,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiff2pdf.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiff2ps.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiff2rgba.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiff_tools.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiffcmp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiffcp.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tiffcrop.Po@am__quote@ # am--include-marker
@@ -924,6 +929,7 @@ distclean: distclean-am
 	-rm -f ./$(DEPDIR)/tiff2pdf.Po
 	-rm -f ./$(DEPDIR)/tiff2ps.Po
 	-rm -f ./$(DEPDIR)/tiff2rgba.Po
+	-rm -f ./$(DEPDIR)/tiff_tools.Po
 	-rm -f ./$(DEPDIR)/tiffcmp.Po
 	-rm -f ./$(DEPDIR)/tiffcp.Po
 	-rm -f ./$(DEPDIR)/tiffcrop.Po
@@ -991,6 +997,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ./$(DEPDIR)/tiff2pdf.Po
 	-rm -f ./$(DEPDIR)/tiff2ps.Po
 	-rm -f ./$(DEPDIR)/tiff2rgba.Po
+	-rm -f ./$(DEPDIR)/tiff_tools.Po
 	-rm -f ./$(DEPDIR)/tiffcmp.Po
 	-rm -f ./$(DEPDIR)/tiffcp.Po
 	-rm -f ./$(DEPDIR)/tiffcrop.Po
